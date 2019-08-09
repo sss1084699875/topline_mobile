@@ -48,9 +48,16 @@ export default {
     }
   },
   methods: {
-    async  handleLogin () {
-      const data = await login(this.user)
-      console.log(data)
+    async handleLogin () {
+      try {
+        const data = await login(this.user)
+
+        this.$store.commit('setuser', data)
+
+        this.$router.push({ name: 'home' })
+      } catch (err) {
+        console.log('登录失败' + err)
+      }
     }
   }
 }
