@@ -7,12 +7,14 @@
     <!-- 表单内容 -->
     <van-cell-group>
     <van-field
+        v-validate="'required'"
+        name="mobile"
         left-icon="phone-o"
         v-model="user.mobile"
         label="手机号"
         placeholder="请输入手机号"
         clearable
-        :error-message="mobileErrorMsg"
+        :error-message="errors.first('mobile')"
     />
     <van-field
         left-icon="like-o"
@@ -42,20 +44,11 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      },
-      mobileErrorMsg: ''
+      }
     }
   },
   methods: {
     async handleLogin () {
-      // 验证表单的输入
-      if (this.user.mobile.trim().length === 0) {
-        this.mobileErrorMsg = '请输入手机号码'
-        return
-      } else {
-        this.mobileErrorMsg = ''
-      }
-
       try {
         const data = await login(this.user)
 
