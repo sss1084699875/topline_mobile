@@ -7,7 +7,7 @@
     <!-- 表单内容 -->
     <van-cell-group>
     <van-field
-        v-validate="'required'"
+        v-validate="'required|digits:11'"
         name="mobile"
         left-icon="phone-o"
         v-model="user.mobile"
