@@ -51,13 +51,18 @@ export default {
     }
   },
   methods: {
-    async handleLogin () {
+    handleLogin () {
       try {
-        const data = await login(this.user)
-
-        this.$store.commit('setuser', data)
-
-        this.$router.push({ name: 'home' })
+        // 进行表单验证
+        this.$validator.validate().then(async valid => {
+          if (!valid) {
+          // do stuff if not valid.
+            return
+          }
+          const data = await login(this.user)
+          this.$store.commit('setuser', data)
+          this.$router.push({ name: 'home' })
+        })
       } catch (err) {
         console.log('登录失败' + err)
       }
