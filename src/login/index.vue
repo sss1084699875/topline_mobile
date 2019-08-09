@@ -3,8 +3,6 @@
     <!-- 导航头 -->
     <van-nav-bar
       title="登录"
-      @click-left="onClickLeft"
-      @click-right="onClickRight"
     />
     <!-- 表单内容 -->
     <van-cell-group>
@@ -14,6 +12,7 @@
         label="手机号"
         placeholder="请输入手机号"
         clearable
+        :error-message="mobileErrorMsg"
     />
     <van-field
         left-icon="like-o"
@@ -31,7 +30,7 @@
         <van-button type="info" class="btn" @click="handleLogin">登录</van-button>
     </div>
   </div>
-          <!-- error-message="验证码格式错误" -->
+
 </template>
 
 <script>
@@ -43,12 +42,20 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-
-      }
+      },
+      mobileErrorMsg: ''
     }
   },
   methods: {
     async handleLogin () {
+      // 验证表单的输入
+      if (this.user.mobile.trim().length === 0) {
+        this.mobileErrorMsg = '请输入手机号码'
+        return
+      } else {
+        this.mobileErrorMsg = ''
+      }
+
       try {
         const data = await login(this.user)
 
