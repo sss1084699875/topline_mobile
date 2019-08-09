@@ -28,13 +28,15 @@
 
     <!-- 登录按钮 -->
     <div class="login-btn">
-        <van-button type="info" class="btn">登录</van-button>
+        <van-button type="info" class="btn" @click="handleLogin">登录</van-button>
     </div>
   </div>
           <!-- error-message="验证码格式错误" -->
 </template>
 
 <script>
+import { login } from '@/api/user.js'
+
 export default {
   data () {
     return {
@@ -43,6 +45,12 @@ export default {
         code: '246810'
 
       }
+    }
+  },
+  methods: {
+    async  handleLogin () {
+      const data = await login(this.user)
+      console.log(data)
     }
   }
 }
