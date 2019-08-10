@@ -3,6 +3,8 @@
     <!-- 导航栏 -->
     <van-nav-bar title="黑马头条"
      />
+     <!-- 下拉加载最新数据 -->
+     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
     <!-- 频道列表 -->
     <van-tabs>
       <van-tab
@@ -27,7 +29,7 @@
         </van-list>
       </van-tab>
     </van-tabs>
-
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -38,10 +40,13 @@ export default {
       // list 文章列表的数据
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      //   下拉更新组件
+      isLoading: false
     }
   },
   methods: {
+    // list组件
     onLoad () {
       // 异步更新数据
       setTimeout(() => {
@@ -55,6 +60,14 @@ export default {
         if (this.list.length >= 40) {
           this.finished = true
         }
+      }, 500)
+    },
+    // 下载加载更多组件
+    onRefresh () {
+      setTimeout(() => {
+        this.$toast('刷新成功')
+        this.isLoading = false
+        this.count++
       }, 500)
     }
   }
