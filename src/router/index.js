@@ -9,6 +9,17 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
+    },
+    {
+      path: '/',
+      component: () => import(/* webpackChunkName: "layout" */ '@/views/layout-tabbar/index.vue'),
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: () => import(/* webpackChunkName: "home" */ '@/views/home/index.vue')
+        }
+      ]
     }
   ]
   // routes: [
