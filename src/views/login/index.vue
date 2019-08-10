@@ -51,18 +51,25 @@ export default {
     }
   },
   methods: {
-    handleLogin () {
+    async handleLogin () {
       try {
         // 进行表单验证
-        this.$validator.validate().then(async valid => {
-          if (!valid) {
-          // do stuff if not valid.
-            return
-          }
-          const data = await login(this.user)
-          this.$store.commit('setuser', data)
-          this.$router.push({ name: 'home' })
-        })
+        const valid = await this.$validator.validate()
+        if (!valid) {
+          // 验证失败
+          return
+        }
+        // .then(async valid => {
+        //   if (!valid) {
+        //   // do stuff if not valid.
+        //     return
+        //   }
+        const data = await login(this.user)
+
+        this.$store.commit('setUser', data)
+
+        this.$router.push({ name: 'home' })
+        // })
       } catch (err) {
         console.log('登录失败' + err)
       }
