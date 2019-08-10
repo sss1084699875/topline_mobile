@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <van-nav-bar title="黑马头条"
+    <van-nav-bar title="黑马头条" fixed
      />
      <!-- 下拉加载最新数据 -->
      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -75,4 +75,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.van-tabs {
+    margin-bottom: 100px;
+    margin-top: 92px;
+}
 </style>
