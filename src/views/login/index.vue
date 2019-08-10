@@ -32,7 +32,7 @@
 
     <!-- 登录按钮 -->
     <div class="login-btn">
-        <van-button type="info" class="btn" @click="handleLogin">登录</van-button>
+        <van-button type="info" class="btn" :loading='loading'  loading-type="spinner" loading-text="正在登录.." @click="handleLogin">登录</van-button>
     </div>
   </div>
 
@@ -47,7 +47,9 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      }
+      },
+      // 控制按钮的加载提升是否显示
+      loading: false
     }
   },
   methods: {
@@ -55,8 +57,10 @@ export default {
       try {
         // 进行表单验证
         const valid = await this.$validator.validate()
+        this.loading = true
         if (!valid) {
           // 验证失败
+          this.loading = false
           return
         }
         // .then(async valid => {
@@ -69,10 +73,13 @@ export default {
         this.$store.commit('setUser', data)
 
         this.$router.push({ name: 'home' })
+
+        this.$toast.success('登录成功')
         // })
       } catch (err) {
-        console.log('登录失败' + err)
+        this.$toast.fail('登录失败')
       }
+      this.loading = false
     }
   },
   created () {
