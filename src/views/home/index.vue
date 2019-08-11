@@ -22,9 +22,9 @@
         @load="onLoad"
         >
         <van-cell
-            v-for="item in list"
-            :key="item"
-            :title="item"
+            v-for="item in channel.articles"
+            :key="item.aut_id"
+            :title="item.title"
         />
         </van-list>
       </van-tab>
@@ -35,6 +35,7 @@
 
 <script>
 import { getChannels } from '@/api/channel'
+import { getArticles } from '@/api/article'
 export default {
   data () {
     return {
@@ -47,7 +48,9 @@ export default {
       // 存储频道列表
       channels: [],
       // 激活的tab的索引
-      activeTabIndex: 0
+      activeTabIndex: 0,
+      // 时间戳
+      timestamp: Date.now()
     }
   },
   created () {
@@ -64,11 +67,10 @@ export default {
       if (this.$store.state.user) {
         const data = await getChannels()
         // console.log(data)
-        this.channels = data.Channels
+        this.channels = data.channels
       } else {
         // 2. 如果用户没有登录，从本地缓存中获取数据
-        // this.channels = JSON.parse(window.localStorage.getItem('channels')) || []
-        console.log(this.channels.length)
+        this.channels = JSON.parse(window.localStorage.getItem('channels')) || []
         // 3. 如果本地缓存没有数据，发送请求获取数据，存储到本地存储中
         if (this.channels.length === 0) {
           const data = await getChannels()
@@ -79,17 +81,29 @@ export default {
         }
       }
       // 给所有的频道对象, 添加一个articles属性
+      // console.log(this.channels)
       this.channels.forEach((item) => {
         item.articles = []
+        // this.$set(item, 'articles', [])
       })
     },
     // list组件
-    onLoad () {
+    async onLoad () {
       // 1 找到当前频道 和id
       const currentChannel = this.channels[this.activeTabIndex]
       const id = currentChannel.id
       // 2 给所有的频道对象添加articles属性 (在获取完频道列表 实现)
+      // 3 发送请求,获取数据,处理时间戳
+      const data = await getArticles({
+        channelId: id,
+        timestamp: this.timestamp
+      })
+      currentChannel.articles = data.results
 
+      console.log(this.channels)
+      // 记录时间戳
+      this.timestamp = data.pre_timestamp
+      // console.log(data)
       // // 异步更新数据
       // setTimeout(() => {
       //   for (let i = 0; i < 10; i++) {
