@@ -83,8 +83,8 @@ export default {
       // 给所有的频道对象, 添加一个articles属性
       // console.log(this.channels)
       this.channels.forEach((item) => {
-        item.articles = []
-        // this.$set(item, 'articles', [])
+        // item.articles = []
+        this.$set(item, 'articles', [])
       })
     },
     // list组件
@@ -98,11 +98,22 @@ export default {
         channelId: id,
         timestamp: this.timestamp
       })
-      currentChannel.articles = data.results
 
-      console.log(this.channels)
+      // currentChannel.articles = data.results
+      // [{} ,{},[{},{}]]
+      // currentChannel.articles.push(data.results)
+      // [{} ,{},{},{}]
+      currentChannel.articles.push(...data.results)
+      // console.log(this.channels)
+
       // 记录时间戳
       this.timestamp = data.pre_timestamp
+      // 本次数据加载完毕
+      this.loading = false
+
+      if (data.results.length === 0) {
+        this.finished = true
+      }
       // console.log(data)
       // // 异步更新数据
       // setTimeout(() => {
