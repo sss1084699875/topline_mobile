@@ -3,7 +3,6 @@ import store from '@/store'
 //  1 创建axios实例
 const request = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
-
 })
 
 // 2 修改返回的数据结构 -- 响应拦截器

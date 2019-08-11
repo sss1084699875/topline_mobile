@@ -8,9 +8,9 @@
     <!-- 频道列表 -->
     <van-tabs>
       <van-tab
-      v-for="index in 8"
-      :title="'标签 '  + index"
-      :key="index">
+      v-for="channel in channels"
+      :title="channel.name"
+      :key="channel.id">
       <!-- 内容 {{ index }} -->
       <!-- 文章列表 不同的频道有不同的文章列表 -->
        <!-- 当lsit没有到达页面底部的时候,会触发load事件,并吧loading设置为true -->
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { getChannels } from '@/api/channel'
 export default {
   data () {
     return {
@@ -42,10 +43,40 @@ export default {
       loading: false,
       finished: false,
       //   下拉更新组件
-      isLoading: false
+      isLoading: false,
+      // 存储频道列表
+      channels: []
     }
   },
+  created () {
+    // 获取频道数据
+    this.loadChannels()
+  },
   methods: {
+    async loadChannels () {
+      // 测试
+      // const data = await getChannels()
+      // console.log(data)
+
+      // 1. 判断用户是否登录，如果用户登录，直接获取数据
+      if (this.$store.state.user) {
+        const data = await getChannels()
+        // console.log(data)
+        this.channels = data.Channels
+      } else {
+        // 2. 如果用户没有登录，从本地缓存中获取数据
+        // this.channels = JSON.parse(window.localStorage.getItem('channels')) || []
+        console.log(this.channels.length)
+        // 3. 如果本地缓存没有数据，发送请求获取数据，存储到本地存储中
+        if (this.channels.length === 0) {
+          const data = await getChannels()
+          // console.log(data)
+          this.channels = data.channels
+          // 存储到本地存储中
+          window.localStorage.setItem('channels', JSON.stringify(this.channels))
+        }
+      }
+    },
     // list组件
     onLoad () {
       // 异步更新数据
@@ -55,7 +86,6 @@ export default {
         }
         // 加载状态结束
         this.loading = false
-
         // 数据全部加载完成
         if (this.list.length >= 40) {
           this.finished = true
@@ -79,11 +109,4 @@ export default {
     margin-bottom: 100px;
     margin-top: 92px;
 }
-//在scoped 中设置的样式,如果元素是动态生成的,不启作用
-//子组件
-//深度选择器 /deep/
-
-// .van-tabs /deep/ .van-tabs__content{
-//   margin-top: 300px;
-// }
 </style>

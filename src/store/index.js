@@ -11,7 +11,7 @@ export default new Vuex.Store({
     user: getUser()
   },
   mutations: {
-    setuser (state, data) {
+    setUser (state, data) {
       state.user = data
       setUser(data)
     }
