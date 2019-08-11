@@ -1,8 +1,7 @@
 import request from '@/utils/request'
 
-/**
- * 获取文章数据
- */
+// 获取文章数据
+
 export const getArticles = ({
   channelId,
   timestamp,
