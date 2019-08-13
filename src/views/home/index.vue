@@ -202,7 +202,7 @@ export default {
         return item.art_id === this.currentArticle.art_id
       })
 
-      // articles.splice(index, 1)
+      articles.splice(index, 1)
     }
   }
 }

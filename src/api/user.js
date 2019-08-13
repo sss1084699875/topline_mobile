@@ -15,7 +15,7 @@ export const login = ({
  * @param {*} 用户的id
  */
 export const blackUserList = (id) => {
-  return request.post('/app/v1_0/user/blacklists', {
+  return request.post('/app/v1_0/article/reports', {
     target: id
   })
 }
