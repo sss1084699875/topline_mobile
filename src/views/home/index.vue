@@ -40,21 +40,27 @@
             <span>{{ item.aut_name }}</span>&nbsp;
             <span>{{ item.comm_count }}评论</span>&nbsp;
             <span>{{ item.pubdate | fmtDate }}</span>&nbsp;
+            <van-icon name="close" class="close"/>
           </p>
-
         </div>
         </van-cell>
         </van-list>
       </van-tab>
     </van-tabs>
     </van-pull-refresh>
+  <!--  MoreAction  -->
+    <more-action></more-action>
   </div>
 </template>
 
 <script>
 import { getChannels } from '@/api/channel'
 import { getArticles } from '@/api/article'
+import MoreAction from './components/MoreAction'
 export default {
+  components: {
+    MoreAction
+  },
   data () {
     return {
       // list 文章列表的数据
@@ -169,5 +175,9 @@ export default {
 .van-tabs {
     margin-bottom: 100px;
     margin-top: 92px;
+}
+.close {
+   float : right;
+   font-size: 30px;
 }
 </style>
