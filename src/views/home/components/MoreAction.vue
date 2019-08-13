@@ -3,8 +3,8 @@
      <!-- :value="show" -->
      <!-- @input="show = $event" -->
     <van-dialog
-        :value="show"
-        @input="show = $event"
+        :value="value"
+        @input="$emit('input' , $event)"
         :showConfirmButton = 'false'
         closeOnClickOverlay
         >
@@ -15,12 +15,8 @@
 <script>
 export default {
   name: 'MoreAction',
-  props: [ ],
-  data () {
-    return {
-      show: true
-    }
-  }
+  props: ['value']
+
 }
 </script>
 
