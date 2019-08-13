@@ -25,7 +25,25 @@
             v-for="item in channel.articles"
             :key="item.aut_id"
             :title="item.title"
-        />
+        >
+        <!-- 图文列表展示 -->
+        <div slot="label">
+          <template v-if="item.cover.type">
+            <van-grid :border="false" :column-num="3">
+              <van-grid-item v-for="(img,index) in item.cover.images"
+              :key='index'>
+                <van-image :src="img" />
+              </van-grid-item>
+            </van-grid>
+          </template>
+          <p>
+            <span>{{ item.aut_name }}</span>&nbsp;
+            <span>{{ item.comm_count }}评论</span>&nbsp;
+            <span>{{ item.pubdate }}</span>&nbsp;
+          </p>
+
+        </div>
+        </van-cell>
         </van-list>
       </van-tab>
     </van-tabs>
@@ -91,6 +109,8 @@ export default {
     async onLoad () {
       // 1 找到当前频道 和id
       const currentChannel = this.channels[this.activeTabIndex]
+      // console.log(this.channels)
+      // console.log(currentChannel)
       const id = currentChannel.id
       // 2 给所有的频道对象添加articles属性 (在获取完频道列表 实现)
       // 3 发送请求,获取数据,处理时间戳
@@ -114,6 +134,7 @@ export default {
       if (data.results.length === 0) {
         this.finished = true
       }
+      // console.log(data.results)
       // console.log(data)
       // // 异步更新数据
       // setTimeout(() => {
