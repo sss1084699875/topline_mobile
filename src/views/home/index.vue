@@ -39,7 +39,7 @@
           <p>
             <span>{{ item.aut_name }}</span>&nbsp;
             <span>{{ item.comm_count }}评论</span>&nbsp;
-            <span>{{ item.pubdate }}</span>&nbsp;
+            <span>{{ item.pubdate | fmtDate }}</span>&nbsp;
           </p>
 
         </div>
