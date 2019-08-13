@@ -23,7 +23,7 @@
         >
         <van-cell
             v-for="item in channel.articles"
-            :key="item.aut_id"
+            :key="item.aut_id.toString()"
             :title="item.title"
         >
         <!-- 图文列表展示 -->
@@ -189,6 +189,8 @@ export default {
       this.showAction = false
       // 找到当前频道的文章列表
       const channel = this.channels[this.activeTabIndex]
+
+      console.log(channel)
       const articles = channel.articles
       // 当前文章
       // this.currentArticle
@@ -200,7 +202,7 @@ export default {
         return item.art_id === this.currentArticle.art_id
       })
 
-      articles.splice(index, 1)
+      // articles.splice(index, 1)
     }
   }
 }
