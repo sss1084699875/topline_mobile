@@ -15,3 +15,12 @@ export const getArticles = ({
     }
   })
 }
+/**
+ *不喜欢文章
+ * @param {*} id 文章的id
+ */
+export const disLikeArticle = (id) => {
+  return request.post('/app/v1_0/article/dislikes', {
+    target: id
+  })
+}
