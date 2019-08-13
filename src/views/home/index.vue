@@ -40,7 +40,8 @@
             <span>{{ item.aut_name }}</span>&nbsp;
             <span>{{ item.comm_count }}评论</span>&nbsp;
             <span>{{ item.pubdate | fmtDate }}</span>&nbsp;
-            <van-icon name="close" class="close" @click="showAction = true"/>
+
+            <van-icon name="close" class="close" @click="handleShowAction(item)"/>
           </p>
         </div>
         </van-cell>
@@ -53,7 +54,7 @@
     :value="showAction"
     @input="showAction = $event"
     -->
-    <more-action v-model="showAction"></more-action>
+    <more-action :currentArticle='currentArticle' v-model="showAction"></more-action>
   </div>
 </template>
 
@@ -80,7 +81,9 @@ export default {
       //   // 时间戳
       //   timestamp: Date.now()
       // 控制MoreAction的显示和隐藏
-      showAction: false
+      showAction: false,
+      // 记录点击x的时候的文章对象
+      currentArticle: {}
     }
   },
   created () {
@@ -172,6 +175,13 @@ export default {
         this.isLoading = false
         this.count++
       }, 500)
+    },
+    // 点击按钮的时候
+    // 显示MoreAction
+    // 把当前点击X对应的文章对象 , 保存到currentArticle中
+    handleShowAction (article) {
+      this.showAction = true
+      this.currentArticle = article
     }
   }
 }
