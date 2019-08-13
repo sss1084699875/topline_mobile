@@ -66,9 +66,9 @@ export default {
       // 存储频道列表
       channels: [],
       // 激活的tab的索引
-      activeTabIndex: 0,
-      // 时间戳
-      timestamp: Date.now()
+      activeTabIndex: 0
+    //   // 时间戳
+    //   timestamp: Date.now()
     }
   },
   created () {
@@ -103,6 +103,8 @@ export default {
       this.channels.forEach((item) => {
         // item.articles = []
         this.$set(item, 'articles', [])
+        // 给每个频道增加一个时间戳的属性
+        item.timestamp = Date.now()
       })
     },
     // list组件
@@ -116,7 +118,7 @@ export default {
       // 3 发送请求,获取数据,处理时间戳
       const data = await getArticles({
         channelId: id,
-        timestamp: this.timestamp
+        timestamp: currentChannel.timestamp
       })
 
       // currentChannel.articles = data.results
@@ -127,7 +129,7 @@ export default {
       // console.log(this.channels)
 
       // 记录时间戳
-      this.timestamp = data.pre_timestamp
+      currentChannel.timestamp = data.pre_timestamp
       // 本次数据加载完毕
       this.loading = false
 
