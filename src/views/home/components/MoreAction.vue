@@ -1,8 +1,12 @@
 <template>
+    <!-- v-model="show"  实际上是以下代码-->
+     <!-- :value="show" -->
+     <!-- @input="show = $event" -->
     <van-dialog
-        v-model="show"
-        title="标题"
-        show-cancel-button
+        :value="show"
+        @input="show = $event"
+        :showConfirmButton = 'false'
+        closeOnClickOverlay
         >
         hell
         </van-dialog>
@@ -11,6 +15,7 @@
 <script>
 export default {
   name: 'MoreAction',
+  props: [ ],
   data () {
     return {
       show: true
