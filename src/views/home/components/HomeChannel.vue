@@ -6,7 +6,8 @@
     position="bottom"
     :style="{ height: '90%' }"
 >
-       <div class="channel">
+    <!-- 我的频道 -->
+    <div class="channel">
       <div class="channel-head">
         <div>
           <span class="title">我的频道</span>
@@ -20,17 +21,17 @@
           >编辑</van-button>
         </div>
       </div>
+      <!-- 我的频道列表 -->
       <van-grid class="channel-content" :gutter="10" clickable>
         <van-grid-item
-          v-for="value in 8"
-          :key="value"
-          text="文字">
-          <span class="text">文字</span>
+          v-for="(item,index) in channels"
+          :key="item.id">
+          <span class="text" :class="{ active : index === activeIndex}">{{item.name}}</span>
           <van-icon class="close-icon" name="close" />
         </van-grid-item>
       </van-grid>
     </div>
-
+      <!-- 频道推荐 -->
     <div class="channel">
       <div class="channel-head">
         <div>
@@ -55,7 +56,7 @@
 <script>
 export default {
   name: 'HomeChannel',
-  props: ['value']
+  props: ['value','channels','activeIndex']
 //   data () {
 //     return {
 //       show: true
