@@ -180,7 +180,7 @@ export default {
     // 下载加载更多组件
     onRefresh () {
       setTimeout(() => {
-        this.$toast('刷新成功')
+        this.$toast.success('刷新成功')
         this.isLoading = false
         this.count++
       }, 500)
