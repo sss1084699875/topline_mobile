@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { getSuggestion } from '@/api/search'
 export default {
   data () {
@@ -31,7 +32,7 @@ export default {
       console.log('sss')
     },
     // 用户在文本框输入内容的时候,获取搜索建议
-    async  handleSuggestion () {
+    handleSuggestion: _.debounce(async function () {
       if (this.value.trim() === '') {
         this.suggestionList = []
         return
@@ -44,7 +45,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }
+    }, 500)
   }
 }
 </script>
