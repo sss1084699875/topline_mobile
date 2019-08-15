@@ -4,7 +4,7 @@
     <van-nav-bar title="黑马头条" fixed
      />
      <!-- 下拉加载最新数据 -->
-     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+     <van-pull-refresh  :success-text="successText" v-model="isLoading" @refresh="onRefresh">
     <!-- 频道列表 -->
     <van-tabs v-model="activeTabIndex">
       <div slot="nav-right">
@@ -92,7 +92,9 @@ export default {
       // 记录点击x的时候的文章对象
       currentArticle: {},
       // 控制频道管理弹出页面的隐藏显示
-      showChannel: false
+      showChannel: false,
+      // 下拉成功后提示的文字
+      successText: ''
     }
   },
   created () {
@@ -178,12 +180,24 @@ export default {
       // }, 500)
     },
     // 下载加载更多组件
-    onRefresh () {
-      setTimeout(() => {
-        this.$toast.success('刷新成功')
-        this.isLoading = false
-        this.count++
-      }, 500)
+    async onRefresh () {
+      // 1 找到当前频道 和id
+      const currentChannel = this.channels[this.activeTabIndex]
+
+      const id = currentChannel.id
+      // 2 发送请求,获取数据,处理时间戳
+      const data = await getArticles({
+        channelId: id,
+        timestamp: Date.now()
+      })
+      currentChannel.articles.unshift(...data.results)
+      this.isLoading = false
+      this.successText = `${data.results.length}条数据被加载了`
+      // setTimeout(() => {
+      //   this.$toast.success('刷新成功')
+      //   this.isLoading = false
+      //   this.count++
+      // }, 500)
     },
     // 点击按钮的时候
     // 显示MoreAction
