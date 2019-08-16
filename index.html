@@ -35,23 +35,23 @@
     //在指定的时间内,多次调用函数,只执行一次
     //当每次调用函数的时候,都会重新计时
 
-    function debounce(fn, dalay) {
-        var  timeId
-        return function() {
-            // this
-            clearTimeout(timeId)
-            timeId = setTimeout(() => {
-                fn.apply(this,arguments)
-            },dalay)
-        }
-    }
+    // function debounce(fn, dalay) {
+    //     var  timeId
+    //     return function() {
+    //         // this
+    //         clearTimeout(timeId)
+    //         timeId = setTimeout(() => {
+    //             fn.apply(this,arguments)
+    //         },dalay)
+    //     }
+    // }
 
-    function fn () {
-        console.log('abc')
-        console.log(this)
-    }
+    // function fn () {
+    //     console.log('abc')
+    //     console.log(this)
+    // }
 
-    var f = debounce(fn,300)
+    // var f = debounce(fn,300)
     // f()
     // f()
     // f()
@@ -64,10 +64,68 @@
     // obj.fun()
     // obj.fun()
 
-  setInterval(function () {
-        console.log('-----------')
-        f()
+//   setInterval(function () {
+//         console.log('-----------')
+//         f()
+//     },100)
+
+    //函数节流  多次调用函数, 在指定的时间内只执行一次
+    //立即执行一次函数,过指定的时间内在执行一次,不管调用多少次
+
+    // function fn() {
+    //     console.log('fn')
+    // }
+
+    // var f = _.throttle(fn , 400)
+
+    // f()
+    // f()
+    // f()
+
+    // setInterval(() => {
+    //     console.log('----------')
+    //     f()
+    // },100)
+
+    //函数节流原理
+
+    function throttle(fn,dalay){
+        //last 记录fn最后一次执行的时间
+        var timeId,last
+        return function() {
+            //当前时间
+            var now = Date.now()
+            if(last && now < last + dalay){
+                clearTimeout(timeId)
+                timeId = setTimeout(() => {
+                    last = now
+                    fn.apply(this,arguments)
+                },dalay);
+            }else {
+                //时间到了或者第一次调用
+                last = now
+                fn.apply(this,arguments)
+            }
+        }
+    }
+
+    function fn (){
+        console.log('xxx')
+    }
+
+    var f = throttle(fn,400)
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+
+    setInterval(() => {
+        console.log('----------')
+    f()
     },100)
+
     </script>
 </body>
 </html>
