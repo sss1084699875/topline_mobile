@@ -31,6 +31,43 @@
     //     f()
     // },100)
 
+    //函数防抖的原理
+    //在指定的时间内,多次调用函数,只执行一次
+    //当每次调用函数的时候,都会重新计时
+
+    function debounce(fn, dalay) {
+        var  timeId
+        return function() {
+            // this
+            clearTimeout(timeId)
+            timeId = setTimeout(() => {
+                fn.apply(this,arguments)
+            },dalay)
+        }
+    }
+
+    function fn () {
+        console.log('abc')
+        console.log(this)
+    }
+
+    var f = debounce(fn,300)
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+
+    // var obj = { fun :f }
+    // obj.fun()
+    // obj.fun()
+    // obj.fun()
+    // obj.fun()
+
+  setInterval(function () {
+        console.log('-----------')
+        f()
+    },100)
     </script>
 </body>
 </html>
