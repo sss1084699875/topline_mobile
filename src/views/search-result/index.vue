@@ -15,15 +15,16 @@
             @load="onLoad"
             >
             <van-cell
-                v-for="item in list"
-                :key="item"
-                :title="item"
+                v-for="article in list"
+                :key="article.art_id.toString()"
+                :title="article.title"
             />
         </van-list>
     </div>
 </template>
 
 <script>
+import { getSearchResults } from '@/api/search'
 export default {
   name: 'SearchResult',
   props: ['q'],
@@ -31,24 +32,36 @@ export default {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      // 分页数据
+      page: 1,
+      perPage: 10,
+      // 总共多少页
+      pageCount: 0
     }
   },
   methods: {
-    onLoad () {
-      // 异步更新数据
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
+    async onLoad () {
+      await this.$sleep(500)
+      try {
+        const data = await getSearchResults({
+          page: this.page,
+          perPage: this.perPage,
+          q: this.q
+        })
+        this.list.push(...data.results)
         this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
+        // 总页数
+        this.pageCount = Math.ceil(data.total_count / this.perPage)
+        if (this.page >= this.pageCount) {
+          // 判断是否是最后一页
           this.finished = true
         }
-      }, 500)
+
+        this.page++
+      } catch (err) {
+        this.$toast.fail('加载数据失败' + err)
+      }
     }
   }
 }
