@@ -24,12 +24,13 @@
       style="line-height: inherit;"
       />
       <div v-show="showClose">
-        <span>全部删除</span>&nbsp;
+        <span @click="handleDeleteAll">全部删除</span>&nbsp;
         <span @click="showClose = false">完成</span>
       </div>
     </van-cell>
     <van-cell
-     v-for="item in histories"
+    @click="handleDelete(index)"
+     v-for="(item,index) in histories"
      :key="item"
      :title="item">
       <van-icon
@@ -87,7 +88,17 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }, 500)
+    }, 500),
+    // 删除所有历史记录
+    handleDeleteAll () {
+      this.histories = []
+      window.localStorage.setItem('histories', JSON.stringify(this.histories))
+    },
+    // 删除指定的历史记录
+    handleDelete (index) {
+      this.histories.splice(index, 1)
+      window.localStorage.setItem('histories', JSON.stringify(this.histories))
+    }
   }
 }
 </script>
