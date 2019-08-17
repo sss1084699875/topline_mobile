@@ -10,7 +10,9 @@
     />
     <!-- 搜索建议 -->
     <van-cell-group v-show="suggestionList.length">
-    <van-cell @click="onSearch(item)" v-for="item in suggestionList" :key="item" :title="item" icon="search"  />
+    <van-cell @click="onSearch(item)" v-for="item in suggestionList" :key="item"  icon="search"  >
+      <div slot="title" v-html="highlight(item)"></div>
+    </van-cell>
     </van-cell-group>
 
     <!-- 历史记录 -->
@@ -98,6 +100,10 @@ export default {
     handleDelete (index) {
       this.histories.splice(index, 1)
       window.localStorage.setItem('histories', JSON.stringify(this.histories))
+    },
+    // 高亮显示
+    highlight (item) {
+      return item.replace(this.value, `<span style="color : red ">${this.value}</span>`)
     }
   }
 }
