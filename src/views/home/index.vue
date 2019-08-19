@@ -26,8 +26,9 @@
         @load="onLoad"
         >
         <van-cell
+            @click="$router.push({name : 'article', params : { id : item.art_id.toString() }})" 
             v-for="item in channel.articles"
-            :key="item.aut_id.toString()"
+            :key="item.art_id.toString()"
             :title="item.title"
         >
         <!-- 图文列表展示 -->
