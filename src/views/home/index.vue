@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <van-nav-bar title="黑马头条" fixed  
+    <van-nav-bar title="黑马头条" fixed
     @click.native="$router.push('/search')"
      />
      <!-- 下拉加载最新数据 -->
@@ -26,7 +26,7 @@
         @load="onLoad"
         >
         <van-cell
-            @click="$router.push({name : 'article', params : { id : item.art_id.toString() }})" 
+            @click="$router.push({name : 'article', params : { id : item.art_id.toString() }})"
             v-for="item in channel.articles"
             :key="item.art_id.toString()"
             :title="item.title"
