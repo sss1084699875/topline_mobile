@@ -1,7 +1,8 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <van-nav-bar title="黑马头条" fixed
+    <van-nav-bar title="黑马头条" fixed  
+    @click.native="$router.push('/search')"
      />
      <!-- 下拉加载最新数据 -->
      <van-pull-refresh  :success-text="successText" v-model="isLoading" @refresh="onRefresh">
