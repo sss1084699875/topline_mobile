@@ -40,3 +40,11 @@ export const reportArticle = ({
     type: type
   })
 }
+
+/**
+ * 获取文章详情
+ * @param {*} id
+ */
+export const getArticle = (id) => {
+  return request.get(`/app/v1_0/articles/${id}`)
+}
