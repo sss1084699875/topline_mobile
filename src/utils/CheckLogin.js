@@ -1,6 +1,5 @@
-import Vue from 'vue'
 export default {
-  install (vae, options) {
+  install (Vue, options) {
     // 判断是否登录
     Vue.prototype.$checkLogin = function () {
       // 判断用户是否登录
@@ -13,7 +12,12 @@ export default {
         message: '该操作需要登录,确认登录嘛?'
       }).then(() => {
         // on confirm
-        this.$router.push({ name: 'login' })
+        this.$router.push({ name: 'login',
+          query: {
+            // 在url上记录下来,跳转之前的地址
+            redirect: this.$route.fullPath
+          }
+        })
       }).catch(() => {
         // on cancel
       })

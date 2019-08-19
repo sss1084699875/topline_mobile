@@ -71,8 +71,10 @@ export default {
         const data = await login(this.user)
 
         this.$store.commit('setUser', data)
-
-        this.$router.push({ name: 'home' })
+        // 如果login的url上包含redirect来源地址
+        // 跳转到来源的地址,如果没有的话就跳转到首页
+        this.$router.push({ path: this.$route.query.redirect || '/'
+        })
 
         this.$toast.success('登录成功')
         // })
