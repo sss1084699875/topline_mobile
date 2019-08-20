@@ -99,6 +99,12 @@ export default {
       successText: ''
     }
   },
+  // activated () {
+  //   console.log('activated')
+  // },
+  // deactivated () {
+  //   console.log('deactivated')
+  // },
   created () {
     // 获取频道数据
     this.loadChannels()
