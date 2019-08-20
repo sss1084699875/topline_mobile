@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '@/store'
-import router from '@/router'
 import JSONbig from 'json-bigint'
 
 //  1 创建axios实例
