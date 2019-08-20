@@ -138,7 +138,7 @@ export default {
     // list组件
     async onLoad () {
       // 只写一行代码,暂停800毫秒再去执行
-      await this.$sleep(2000)
+      await this.$sleep(500)
       // 1 找到当前频道 和id
       const currentChannel = this.channels[this.activeTabIndex]
       // console.log(this.channels)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-
+import router from '@/router'
 import JSONbig from 'json-bigint'
 
 //  1 创建axios实例
@@ -37,7 +37,28 @@ request.interceptors.request.use(function (config) {
 request.interceptors.response.use(function (response) {
   // Do something with response data
   return response.data.data || response.data
-}, function (error) {
+}, async function (error) {
+  // 判断出错的时候状态码是否是401,
+  if (error.response.status === 401) {
+    // 过期
+    const refreshToken = store.state.user.refresh_token
+    const res = await axios({
+      method: 'put',
+      url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+      headers: {
+        Authorization: `Bearer ${refreshToken}`
+      }
+    })
+    // 使用refreshToken和服务器交换的俩个小时可用的token
+    const token = res.data.data.token
+    // 执行mutation记录最 新的状态
+    store.commit('setUser', {
+      refresh_token: refreshToken,
+      token: token
+    })
+    // 继续发送之前401的那次请求
+    return request(error.config)
+  }
   // Do something with response error
   return Promise.reject(error)
 })
