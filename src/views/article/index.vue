@@ -20,7 +20,7 @@
         <more-action :article="article"></more-action>
 
         <!-- 评论列表 -->
-        <comment-list></comment-list>
+        <comment-list :isArticle="true" :id="id"></comment-list>
         </div>
     </div>
 </template>
@@ -32,6 +32,7 @@ import CommentList from './components/CommentList'
 import { getArticle } from '@/api/article'
 export default {
   name: 'Articel',
+  // 文章的id
   props: ['id'],
   data () {
     return {
