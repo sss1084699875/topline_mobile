@@ -18,10 +18,12 @@
         </div>
         <!-- 点赞和取消 -->
         <more-action :article="article"></more-action>
+
         <!-- 评论列表 -->
         <comment-list :isArticle="true" :id="id"></comment-list>
-        <!-- 发布评论 -->
-        <send-comment></send-comment>
+
+        <!-- 发布评论 ,给文章发布评论不需要设置artId-->
+        <send-comment :id="id"></send-comment>
         </div>
     </div>
 </template>

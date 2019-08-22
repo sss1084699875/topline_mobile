@@ -58,7 +58,7 @@ export default {
       this.loading = false
       // 判断是否所有数据都已经加装
       if (data.results.length === 0) {
-        this.finished = false
+        this.finished = true
       }
     }
   }
