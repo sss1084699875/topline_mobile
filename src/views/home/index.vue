@@ -46,7 +46,7 @@
             <span>{{ item.comm_count }}评论</span>&nbsp;
             <span>{{ item.pubdate | fmtDate }}</span>&nbsp;
 
-            <van-icon name="close" class="close" @click="handleShowAction(item)"/>
+            <van-icon name="close" class="close" @click.stop="handleShowAction(item)"/>
           </p>
         </div>
         </van-cell>
