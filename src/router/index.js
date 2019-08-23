@@ -25,7 +25,7 @@ export default new Router({
     {
       path: '/article/:id',
       name: 'article',
-      props : true,
+      props: true,
       component: () => import(/* webpackChunkName: "article" */ '@/views/article/index.vue')
     },
     {
@@ -36,6 +36,11 @@ export default new Router({
           path: '/',
           name: 'home',
           component: () => import(/* webpackChunkName: "home" */ '@/views/home/index.vue')
+        },
+        {
+          path: '/my',
+          name: 'my',
+          component: () => import(/* webpackChunkName: "my" */ '@/views/my/index.vue')
         }
       ]
     }
