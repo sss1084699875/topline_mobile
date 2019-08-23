@@ -12,12 +12,17 @@
     :title="$store.state.currentComment.reply_count + '条评论'"
     />
     <!-- 当前的评论信息 -->
-     <van-cell v-if="$store.state.currentComment"
-        :title=" $store.state.currentComment.aut_name"
+     <van-cell
     >
+    <!-- 作者名字 -->
+    <div slot="title">
+        {{$store.state.currentComment.aut_name}} &nbsp;
+        <van-tag>楼主</van-tag>
+    </div>
     <!-- 头像 -->
     <div slot="icon">
         <img class="avatar" :src=" $store.state.currentComment.aut_photo" alt="">
+
     </div>
     <!-- 右边的按钮 -->
     <div slot="default">
@@ -30,13 +35,19 @@
     </div>
     </van-cell>
     <!-- 评论列表 -->
+    <h6>全部回复</h6>
     <!-- 发布评论 -->
+    <comment-list :isArticle="false" :id="$store.state.currentComment.com_id.toString()"></comment-list>
     </van-popup>
 </template>
 
 <script>
+import CommentList from './CommentList'
 export default {
-  name: 'ReplyList'
+  name: 'ReplyList',
+  components: {
+    CommentList
+  }
 }
 </script>
 
