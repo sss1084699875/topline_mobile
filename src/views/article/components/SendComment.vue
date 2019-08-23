@@ -32,7 +32,7 @@ export default {
     // 点击按钮发布评论
     async handleSend () {
       try {
-        const data = await sendComment({
+        await sendComment({
           target: this.id,
           content: this.content,
           artId: this.artId
