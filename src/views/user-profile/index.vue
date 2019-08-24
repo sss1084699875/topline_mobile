@@ -19,17 +19,24 @@
       <van-cell title="性别" is-link :value="currentUser.gender ? '女': '男'" />
       <van-cell title="生日" is-link :value="currentUser.birthday   " />
     </van-cell-group>
+
+    <!-- 弹出上传头像 -->
+    <upload-photo ></upload-photo>
   </div>
 </template>
 
 <script>
 import { getUserProfile } from '@/api/user'
+import UploadPhoto from './components/UploadPhoto'
 export default {
   name: 'UserProfile',
   data () {
     return {
       currentUser: {}
     }
+  },
+  components: {
+    UploadPhoto
   },
   created () {
     this.loadUserProfile()
