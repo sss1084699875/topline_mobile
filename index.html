@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    <input type="file" id="file">
+    <img src="" alt="" id="img">
     <script src="./node_modules/lodash/lodash.js"></script>
 
     <script>
@@ -89,42 +91,67 @@
 
     //函数节流原理
 
-    function throttle(fn,dalay){
-        //last 记录fn最后一次执行的时间
-        var timeId,last
-        return function() {
-            //当前时间
-            var now = Date.now()
-            if(last && now < last + dalay){
-                clearTimeout(timeId)
-                timeId = setTimeout(() => {
-                    last = now
-                    fn.apply(this,arguments)
-                },dalay);
-            }else {
-                //时间到了或者第一次调用
-                last = now
-                fn.apply(this,arguments)
-            }
+    // function throttle(fn,dalay){
+    //     //last 记录fn最后一次执行的时间
+    //     var timeId,last
+    //     return function() {
+    //         //当前时间
+    //         var now = Date.now()
+    //         if(last && now < last + dalay){
+    //             clearTimeout(timeId)
+    //             timeId = setTimeout(() => {
+    //                 last = now
+    //                 fn.apply(this,arguments)
+    //             },dalay);
+    //         }else {
+    //             //时间到了或者第一次调用
+    //             last = now
+    //             fn.apply(this,arguments)
+    //         }
+    //     }
+    // }
+
+    // function fn (){
+    //     console.log('xxx')
+    // }
+
+    // var f = throttle(fn,400)
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+    // f()
+
+    // setInterval(() => {
+    //     console.log('----------')
+    // f()
+    // },100)
+
+    </script>
+
+    <script>
+
+        var file = document.querySelector('#file')
+        var img  = document.querySelector('#img')
+
+        //当file中选择了文件
+        file.onchange  = function (){
+            console.log(file.files)
+        //     //在h5,增加了fileReader
+        // var fileReader = new FileReader()
+        // fileReader.readAsDataURL(file.files[0])
+        // fileReader.onload= function (){
+        //     // console.log(fileReader.result)
+        //     //经过base64编码的字符串形式,我们选择的是一个图片
+        //     img.src = fileReader.result
+        //  }
+
+        //返回一个在内存中临时可用的图片的地址
+        const url  = URL.createObjectURL(file.files[0])
+        // console.log(url )
+            img.src = url
         }
-    }
-
-    function fn (){
-        console.log('xxx')
-    }
-
-    var f = throttle(fn,400)
-    // f()
-    // f()
-    // f()
-    // f()
-    // f()
-    // f()
-
-    setInterval(() => {
-        console.log('----------')
-    f()
-    },100)
 
     </script>
 </body>
