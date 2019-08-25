@@ -34,6 +34,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "user-profile" */ '@/views/user-profile/index.vue')
     },
     {
+      path: '/chat',
+      name: 'chat',
+      component: () => import(/* webpackChunkName: "chat" */ '@/views/chat/index.vue')
+    },
+    {
       path: '/',
       component: () => import(/* webpackChunkName: "layout" */ '@/views/layout-tabbar/index.vue'),
       children: [
