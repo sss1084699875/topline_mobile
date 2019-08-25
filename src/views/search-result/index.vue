@@ -18,7 +18,7 @@
                 v-for="article in list"
                 :key="article.art_id.toString()"
                 :title="article.title"
-            > 
+            >
                <!-- 图文列表展示 -->
             <div slot="label">
               <template v-if="article.cover.type">
